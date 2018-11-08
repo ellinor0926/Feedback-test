@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+
+.dd-wrapper {
+    width: 250px;
+    margin: 10px;
+}
+
+.dd-header {
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.dd-list {
+    border: 1px solid lightgrey;
+    border-top: none;
+    margin-top: 0;
+    /*padding: 5px;*/
+    padding: 0;
+    list-style-type: none;
+    z-index: 99;
+    position: absolute;
+    background: white;
+    width: 250px;
+}
+
+.dd-list-item {
+    margin: 0;
+    padding: 5px;
+    cursor: pointer;
+    color: #000;
+}
+
+.dd-list-item:hover {
+    background: lightgrey;
+}
+
+.dd-list-search {
+    border: none;
+    padding: 4px;
+    width: 100%;
+}
+
+.dd-list-search:focus {
+   outline-color: lightgrey;
+
+}

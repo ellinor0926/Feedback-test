@@ -1,0 +1,28 @@
+.filter-wrapper {
+    display: flex;
+}
+
+.dd-container {
+    box-shadow: 3px 3px 8px lightgrey;
+    background: #A69CAC;
+    color: white;
+}
+
+.af-container {
+    height: 100vh;
+    /*border: 1px solid lightgrey;*/
+    border-top: none;
+    padding: 10px;
+    box-shadow: 3px 3px 8px lightgrey;
+}
+
+.btn {
+    background: lightblue;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    margin: 5px;
+    border: none;
+    box-shadow: 4px 3px 5px lightgray;
+    cursor: pointer;
+}
