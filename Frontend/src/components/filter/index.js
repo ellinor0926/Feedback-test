@@ -187,18 +187,18 @@ class Filter extends Component {
     }
     };
 
-    filterProducts =() => {
-        let active = this.state.activeFilters;
-        let products = this.state.products;
+    // filterProducts =() => {
+    //     let active = this.state.activeFilters;
+    //     let products = this.state.products;
 
-        let p = active.map(filter => {
-            products.filter(product => {
-                return product[filter.key] == filter.title
-            })
-            return filter;
-        })
-        console.log('p: ', p);
-    }
+    //     let p = active.map(filter => {
+    //         products.filter(product => {
+    //             return product[filter.key] == filter.title
+    //         })
+    //         return filter;
+    //     })
+    //     console.log('p: ', p);
+    // }
 
     //First filter products, then filter feedback?
     filteredFeedback = (list) => {
@@ -207,7 +207,11 @@ class Filter extends Component {
         let feedbackIds = [];
         let a = [];
 
-        this.filterProducts();
+        // this.filterProducts();
+
+        list.reduce((acc, elem) => {
+            
+        }, feedbackIds)
 
         list.map(item => {
             return products.filter(product => {
