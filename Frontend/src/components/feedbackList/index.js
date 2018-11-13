@@ -4,9 +4,9 @@ import ShowFeedback from '../showFeedback';
 
 const FeedbackList = ({ filtered, feedback, users }) => {  
 
-    const handleClickedFeedback = () => {
+    // const handleClickedFeedback = () => {
         
-    }
+    // }
     return(
         <div className='fb-wrapper'>
             <div className='fb-list'>

@@ -2,11 +2,11 @@ import React from 'react';
 import Moment from 'react-moment';
 import './feedback-preview.css'
 
-const FeedbackPreview = ({ feedback, user }) => {
+const FeedbackPreview = ({ feedback }) => {
 
-    const u = user.find(u => {
-        return u._id === feedback.sender
-    })
+    // const u = user.find(u => {
+    //     return u._id === feedback.sender
+    // })
     
     // const altImgSrc = 'http://www.dreams.metroeve.com/wp-content/uploads/2017/05/dreams.metroeve_grey-dreams-meaning.jpg';
 
@@ -33,7 +33,7 @@ const FeedbackPreview = ({ feedback, user }) => {
             <div className='fp-content'>
                 <div className='fp-header'>
                     <p className='fp-name' style={fpHeaderStyles}>
-                        {u.firstName} {u.lastName} ({u.location})
+                        {feedback.sender.firstName} {feedback.sender.lastName} ({feedback.sender.location})
                     </p>
                     
                 </div>

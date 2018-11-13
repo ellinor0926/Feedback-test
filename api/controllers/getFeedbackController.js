@@ -1,12 +1,12 @@
 const Feedback = require('../models/feedback');
-const {getUser} = require('./getUserByIdController');
 
 exports.getFeedback = (req, res) => {
     Feedback.find()
         .exec()
         .then(feedback => {
+
             let result = feedback.map(f => {
-                
+
                 return {
                     _id: f._id,
                     inputType: f.inputType,
@@ -20,11 +20,15 @@ exports.getFeedback = (req, res) => {
                     date: f.date,
                     conversation: f.conversation
                 }
-            });
+
+            })
+
             res.status(200).json(result);
         })
         .catch(error => {
             console.log(error);
-            res.status(500).json({ error })
+            res.status(500).json({
+                error
+            })
         })
 };

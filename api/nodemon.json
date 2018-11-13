@@ -2,8 +2,8 @@
   "env": {
     "SERVER_HOST": "localhost",
     "SERVER_PORT": 3001,
-
-    "MONGO_DB_CONNECTIONSTRING": "mongodb://localhost:27017/feedback-prototype",
+    
+    "MONGO_DB_CONNECTIONSTRING": "mongodb+srv://ellinor:ronille@test-b9gmq.mongodb.net/feedback-prototype?retryWrites=true",
 
     "PRIVATE_SECRET_KEY": "willineedthis"
   }

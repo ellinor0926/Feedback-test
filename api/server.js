@@ -4,7 +4,7 @@ const app = require('./app.js');
 const db = require('mongoose');
 
 //Server
-http.createServer(app).listen(port, () => console.log('server online'));
+http.createServer(app).listen(port, () => console.log('server online at', port));
 
 //Database
 let uri = process.env.MONGO_DB_CONNECTIONSTRING;

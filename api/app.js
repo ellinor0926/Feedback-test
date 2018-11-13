@@ -51,6 +51,8 @@ app.use('/api/send-feedback', sendFeedbackRoute);
 const getFeedbackRoute = require('./routes/getFeedback');
 app.use('/api/get-feedback', getFeedbackRoute);
 
+const getFilteredFeedbackRoute = require('./routes/getFilteredFeedback');
+app.use('/api/filter-feedback', getFilteredFeedbackRoute);
 
 // Export
 module.exports = app;

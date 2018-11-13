@@ -15,7 +15,7 @@ const ShowFeedback = ({ feedback }) => {
         <div className='show-fb'>
             <div className='show-fb-header'>
                 <div className='show-fb-sender'>
-                    <div className='fp-thumbnail' style={thumbnailStyles}>
+                    <div className='fb-thumbnail'>
                     </div>
                 </div>
             </div>
