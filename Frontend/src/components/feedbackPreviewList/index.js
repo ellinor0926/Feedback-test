@@ -1,29 +1,29 @@
 import React from 'react';
 import FeedbackPreview from '../feedbackPreview';
-import ShowFeedback from '../showFeedback';
 
-const FeedbackList = ({ filtered, feedback, users }) => {  
+const FeedbackList = ({ filtered, feedback, active, returnId }) => {  
 
-    // const handleClickedFeedback = () => {
-        
-    // }
+    const handleClickedFeedback = (id) => {
+        returnId(id) 
+    }
+
+
     return(
         <div className='fb-wrapper'>
             <div className='fb-list'>
-                {filtered.length > 0 ? (
+                {active ? (
                     filtered.map((item, i) => {
-                        return <FeedbackPreview feedback={item} user={users} key={i} />
+                        return <FeedbackPreview feedback={item} key={i} clickFeedback={handleClickedFeedback} />
                     })
                 )
                 : 
                 (
                     feedback.map((item, i) => {
-                        return <FeedbackPreview feedback={item} user={users} key={i} />
+                        return <FeedbackPreview feedback={item} key={i} clickFeedback={handleClickedFeedback} />
                     })
                 )}
             </div>
 
-            <ShowFeedback />
         </div>
 
     )

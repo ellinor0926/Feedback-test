@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Dropdown from "./dropdown";
 import ActiveFilters from './activeFilters';
-import FeedbackList from '../feedbackList';
 
 import './filter.css';
 
@@ -16,7 +15,7 @@ class Filter extends Component {
                 key: 'hfbName'
             }, {
                 id: 1,
-                title: 'Textile',
+                title: 'Shelves',
                 selected: false,
                 key: 'hfbName'
             }, {
@@ -37,23 +36,14 @@ class Filter extends Component {
             }
         ],
         favoriteFilters: [],
-        activeFilters: [],
-        feedback: [],
-        products: [],
-        filteredFeedback: [],
-        users: []
-
+        activeFilters: []
     };
 
     componentDidMount() {
-        this.itemNumberFilter(this.props.products);
-
-        fetch('http://localhost:3001/api/get-feedback')
-            .then(response => response.json())
-            .then(feedback => {
-                this.setState({
-                    feedback: feedback.reverse()
-                })
+        fetch('http://localhost:3001/api/get-products')
+        .then(response => response.json())
+        .then(products => {
+            this.itemNumberFilter(products);
             });
 
     }
@@ -195,6 +185,7 @@ class Filter extends Component {
 
     filterFeedback = (active) => {
         let queries = {}
+
         for (let a of active) {
             if (a.key in queries) {
                 queries[a.key] = [
@@ -206,20 +197,8 @@ class Filter extends Component {
                 queries[a.key] = [a.title]
             }
         }
-        
-        fetch('http://localhost:3001/api/filter-feedback', {
-            method: 'POST',
-            body: JSON.stringify(queries),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(feedback => {
-                this.setState({
-                    filteredFeedback: feedback.reverse()
-                })
-            });
+        this.props.filterFeedback(queries);
+
     }
 
     render() {
@@ -233,16 +212,24 @@ class Filter extends Component {
                         titleHelper='HFB'
                         title='HFB'
                         list={this.dropdownList('hfbName')}
-                        toggleItem={this.toggleSelected}/> {this.state.filters.length > 5 && <Dropdown
+                        toggleItem={this.toggleSelected}
+                    /> 
+                        
+                        {this.state.filters.length > 5 
+                    && <Dropdown
                         titleHelper="Item Number"
                         title='Item Number'
                         list={this.dropdownList('itemNumber')}
-                        toggleItem={this.toggleSelected}/>}
+                        toggleItem={this.toggleSelected}/
+                    >}
+
                     <Dropdown
                         titleHelper='Saved filter'
                         title='Saved filters'
                         list={this.state.favoriteFilters}
-                        toggleItem={this.setFavoritesAsSelected}/>
+                        toggleItem={this.setFavoritesAsSelected}
+                    />
+
                 </div>
                 <div className='af-container'>
                     {/*Active filters-wrapper*/}
@@ -253,10 +240,6 @@ class Filter extends Component {
                         add={this.addFavoriteFilters}
                         validate={!this.validateNewFavorite()}/>
                 </div>
-                {this.state.feedback.length > 0 && <FeedbackList
-                    filtered={this.state.filteredFeedback}
-                    feedback={this.state.feedback}
-                    users={this.state.users}/>}
             </div>
         );
     }

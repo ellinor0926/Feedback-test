@@ -18,7 +18,9 @@ exports.getFeedback = (req, res) => {
                     supplier: f.supplier,
                     productionWeek: f.productionWeek,
                     date: f.date,
-                    conversation: f.conversation
+                    conversation: f.conversation,
+                    itemName: f.itemName,
+
                 }
 
             })

@@ -2,20 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 import './feedback-preview.css'
 
-const FeedbackPreview = ({ feedback }) => {
-
-    // const u = user.find(u => {
-    //     return u._id === feedback.sender
-    // })
-    
-    // const altImgSrc = 'http://www.dreams.metroeve.com/wp-content/uploads/2017/05/dreams.metroeve_grey-dreams-meaning.jpg';
-
-    // const thumbnailStyles = {
-    //     backgroundImage: `url(${u.imgSrc.length > 0 ? u.imgSrc : altImgSrc})`,
-    //     backgroundRepeat: 'no-repeat',
-    //     backgroundPosition: 'center',
-    //     backgroundSize: 'cover'
-    // }
+const FeedbackPreview = ({ feedback, clickFeedback }) => {
 
     const fpHeaderStyles = {
         maxWidth: '220px',
@@ -26,10 +13,9 @@ const FeedbackPreview = ({ feedback }) => {
 
 
 
+
     return(
-        <div className='fp-container'>
-                {/* <div className='fp-thumbnail' style={thumbnailStyles}>
-                </div> */}
+        <div className='fp-container' onClick={() => clickFeedback(feedback._id)} >
             <div className='fp-content'>
                 <div className='fp-header'>
                     <p className='fp-name' style={fpHeaderStyles}>

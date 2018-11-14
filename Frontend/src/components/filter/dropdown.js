@@ -69,32 +69,6 @@ class Dropdown extends Component {
                 </ul>}
             </div>
         )
-
-        // const{toggleItem} = this.props;
-        // const {listOpen, headerTitle, list} = this.state;
-        // return (
-        //     <div className="dd-wrapper">
-        //         <div className="dd-header" onClick={() => this.toggleList()}>
-        //             <div className="dd-header-title">{headerTitle}</div>
-        //             {listOpen
-        //                 ? <FontAwesome name="angle-up" size="2x"/>
-        //                 : <FontAwesome name="angle-down" size="2x"/>
-        //             }
-        //         </div>
-        //         {listOpen && <ul className="dd-list">
-        //             <DropdownSearch onSearch={this.handleResults} list={list}/>
-        //             {list.map(item => { 
-        //                 return (
-        //                 <li className="dd-list-item"
-        //                     key={item.id}
-        //                     onClick={() => toggleItem(item)}
-        //                 >
-        //                     {item.name} {item.selected && <FontAwesome name="check"/>}
-        //                 </li>
-        //             )})}
-        //         </ul>}
-        //     </div>
-        // )
     }
 }
 
