@@ -1,8 +1,23 @@
 .fp-container {
+    border: none;
     border-bottom: 1px solid lightgray;
     padding: 6px;
     display: flex;
+    cursor: pointer;
+    outline: none;
+    background: none;
+    text-align: left;
+    margin: auto;
+    width: 100%;
+}
 
+.fp-container:hover {
+    background: #b2d1ff;
+}
+
+.fp-container:focus {
+    background: #77adff;
+    color: white;
 }
 
 .fp-thumbnail {

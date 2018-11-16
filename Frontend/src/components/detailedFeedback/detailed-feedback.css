@@ -1,0 +1,58 @@
+.detailed-fb {
+    /* padding: 8px; */
+    width: 100%
+}
+
+/* This is the styling for the header it contains information about the sender and the product */
+.detailed-fb-header {
+    display: flex;
+    padding: 8px;
+}
+
+.detailed-fb-productInfo {
+    font-weight: bold;
+    font-size: 150%;
+    margin: auto;
+}
+
+.detailed-fb-dwpbtn  {
+    background: blue;
+    width: 100px;
+}
+
+/* This is styling for the content of the feedback */
+
+.detailed-fb-meta table {
+    width: 100%;
+    color: grey;
+}
+.detailed-fb-meta th {
+    text-align: left;
+    font-weight: 100;
+}
+
+.detailed-fb-meta table, th, td {
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+}
+
+.detailed-fb-meta th, td {
+    padding: 8px;
+}
+
+.detailed-fb-content {
+    padding: 8px;
+    min-height: 200px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+
+}
+
+.translate-button {
+    align-self: flex-end;
+}
+.translate-button button {
+    background: red;
+}

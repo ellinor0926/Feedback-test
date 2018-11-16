@@ -1,0 +1,33 @@
+.mh-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.mh-sender {
+    grid-area: sender;
+    display: flex;
+    padding: 5px;
+}
+
+.mh-sender-details{
+    padding: 5px;
+}
+
+.mh-sender-details p {
+    margin: 0 5px;
+}
+
+.mh-sender-role {
+    font-size: small;
+}
+.mh-sender-location {
+    font-size: small;
+}
+
+.mh-date {
+    font-size: small;
+    justify-self: end;
+    align-self: flex-end;
+    padding: 5px;
+}

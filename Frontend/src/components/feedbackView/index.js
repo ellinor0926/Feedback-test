@@ -44,7 +44,6 @@ class FeedbackView extends Component {
     }
 
     render() {
-
         return(
             
             <div className='mainGrid'>
@@ -57,6 +56,7 @@ class FeedbackView extends Component {
                 filtered={this.state.filteredFeedback}
                 feedback={this.state.feedback}
                 returnId={this.handleSelectedFeedback}
+                selectedId={this.state.selectedFeedback ? this.state.selectedFeedback._id : null}
               />
             }
               {this.state.selectedFeedback &&

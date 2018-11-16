@@ -1,0 +1,9 @@
+
+#textarea-custom-reply {
+    border: none;
+    background: #e3e5e8;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 8px;
+    overflow: auto;
+}

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import onClickOutside from "react-onclickoutside";
 import FontAwesome from 'react-fontawesome';
-import './dropdown.css';
 import DropdownSearch from "./dropdownSearch";
+
+import './dropdown.css';
 
 class Dropdown extends Component {
 

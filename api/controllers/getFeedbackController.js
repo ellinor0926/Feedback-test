@@ -20,6 +20,8 @@ exports.getFeedback = (req, res) => {
                     date: f.date,
                     conversation: f.conversation,
                     itemName: f.itemName,
+                    interval: f.interval,
+                    handled: f.handled
 
                 }
 

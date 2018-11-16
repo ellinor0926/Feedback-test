@@ -1,7 +1,8 @@
 import React from 'react';
 import FeedbackPreview from '../feedbackPreview';
+import './feedbackList.css';
 
-const FeedbackList = ({ filtered, feedback, active, returnId }) => {  
+const FeedbackList = ({ filtered, feedback, active, returnId, selectedId }) => {  
 
     const handleClickedFeedback = (id) => {
         returnId(id) 

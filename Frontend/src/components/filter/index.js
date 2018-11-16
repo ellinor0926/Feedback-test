@@ -15,7 +15,7 @@ class Filter extends Component {
                 key: 'hfbName'
             }, {
                 id: 1,
-                title: 'Shelves',
+                title: 'Storage',
                 selected: false,
                 key: 'hfbName'
             }, {

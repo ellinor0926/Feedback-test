@@ -1,6 +1,7 @@
 .af-wrapper {
     position: relative;
     height: 95vh;
+    width: 240px;
 }
 
 .af-list {

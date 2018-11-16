@@ -1,4 +1,9 @@
 .fb-list{
     display: flex;
     flex-direction: column;
+    
+}
+
+.fb-wrapper {
+    box-shadow: 3px 3px 8px lightgrey;
 }
