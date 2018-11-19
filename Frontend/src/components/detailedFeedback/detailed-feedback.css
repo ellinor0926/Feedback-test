@@ -1,6 +1,8 @@
 .detailed-fb {
-    /* padding: 8px; */
-    width: 100%
+    padding: 8px;
+    width: 52%;
+    position: absolute;
+    right: 0;
 }
 
 /* This is the styling for the header it contains information about the sender and the product */

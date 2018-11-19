@@ -21,7 +21,7 @@ class Reply extends Component {
                 </div>
                 </RadioGroup>
 
-                <TextArea rows='10' cols='200' field="custom-reply" id="textarea-custom-reply" placeholder='Custom reply' />
+                <TextArea rows='7' field="custom-reply" id="textarea-custom-reply" placeholder='Custom reply' />
                 <div>
                     <button className='btn' type="submit">Submit</button>
                 </div>

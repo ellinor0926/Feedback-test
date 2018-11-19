@@ -1,3 +1,29 @@
+
+* {
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 .mainGrid {
     display: flex;
+}
+
+.listContainers {
+    width: 50vw;
+    display: flex;
+    position: fixed;
+}
+
+.btn {
+    background: lightblue;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    margin: 5px;
+    border: none;
+    box-shadow: 4px 3px 5px lightgray;
+    cursor: pointer;
 }

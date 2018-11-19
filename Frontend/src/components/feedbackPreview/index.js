@@ -7,7 +7,7 @@ import './feedback-preview.css'
 class FeedbackPreview extends Component {
 
     fpHeaderStyles = {
-        maxWidth: '220px',
+        maxWidth: '200px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'

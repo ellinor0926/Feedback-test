@@ -1,7 +1,12 @@
+.af-container {
+    height: 100vh;
+    border-top: none;
+    padding: 16px;
+    box-shadow: 3px 3px 8px lightgrey;
+}
+
 .af-wrapper {
-    position: relative;
-    height: 95vh;
-    width: 240px;
+    height: 100%;
 }
 
 .af-list {
@@ -12,7 +17,6 @@
 .af-list-item {
     display: flex;
     justify-content: space-between;
-    /*border: 1px solid #f0f0f0;*/
     border-radius: 10px;
     padding: 8px;
     margin: 5px;
@@ -28,6 +32,5 @@
 .btn-container {
     display: flex;
     flex-direction: column;
-    position: absolute;
     bottom: 0;
 }

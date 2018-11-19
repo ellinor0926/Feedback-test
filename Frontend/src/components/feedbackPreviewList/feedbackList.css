@@ -1,9 +1,17 @@
 .fb-list{
     display: flex;
     flex-direction: column;
-    
+    max-width: 200px;
 }
 
 .fb-wrapper {
+    overflow-y: auto;
     box-shadow: 3px 3px 8px lightgrey;
+    height: 100vh;
+
+}
+
+.dd-list {
+    overflow-y: auto;
+    max-height: 350px;
 }

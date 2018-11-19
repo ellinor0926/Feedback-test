@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment as F} from 'react';
 import Dropdown from "./dropdown";
 import ActiveFilters from './activeFilters';
 
@@ -7,48 +7,37 @@ import './filter.css';
 class Filter extends Component {
 
     state = {
-        filters: [
-            {
-                id: 0,
-                title: 'Bed and bath textiles',
-                selected: false,
-                key: 'hfbName'
-            }, {
-                id: 1,
-                title: 'Storage',
-                selected: false,
-                key: 'hfbName'
-            }, {
-                id: 2,
-                title: 'Decorations',
-                selected: false,
-                key: 'hfbName'
-            }, {
-                id: 3,
-                title: 'Kitchen and food',
-                selected: false,
-                key: 'hfbName'
-            }, {
-                id: 4,
-                title: 'Workspace',
-                selected: false,
-                key: 'hfbName'
-            }
-        ],
+        filters: [],
+        // filters: [     {         id: 0,         title: 'Bed and bath textiles',
+        //   selected: false,         key: 'hfbName'     }, {         id: 1,
+        // title: 'Storage',         selected: false,         key: 'hfbName'     }, {
+        //      id: 2,         title: 'Decorations',         selected: false,
+        // key: 'hfbName'     }, {         id: 3,         title: 'Kitchen and food',
+        //     selected: false,         key: 'hfbName'     }, {         id: 4,
+        // title: 'Workspace',         selected: false,         key: 'hfbName'     } ],
         favoriteFilters: [],
         activeFilters: []
     };
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/get-products')
-        .then(response => response.json())
-        .then(products => {
-            this.itemNumberFilter(products);
-            });
+        // fetch('http://localhost:3001/api/get-products') .then(response =>
+        // response.json()) .then(products => {     this.itemNumberFilter(products);
+        // });
+        
+        fetch('http://localhost:3001/api/get-filters')
+            .then(res => res.json())
+            .then(filters => {
+                let something = filters.map(filter => {
+                    filter.selected = false;
+                    return filter;
+                })
+
+                this.setState({filters: something})
+            })
 
     }
 
-    //These handles the fetched arrays and format them for the dropdowns
+    // These handles the fetched arrays and format them for the dropdowns
     itemNumberFilter = (array) => {
         let newId = this.state.filters.length - 1;
         const itemNumbers = array.map(item => {
@@ -72,12 +61,8 @@ class Filter extends Component {
 
     //Updates state with active filters
     handleActiveFilters = () => {
-        let active = this
-            .state
-            .filters
-            .filter(item => item.selected);
-
-        // console.log(this.filterFeedback(active))
+        let active = this.state.filters.filter(item => item.selected);
+            
         this.filterFeedback(active);
 
         this.setState({activeFilters: active})
@@ -96,12 +81,10 @@ class Filter extends Component {
 
     //This returns what list to render
     dropdownList = (key) => {
-        return this
-            .state
-            .filters
-            .filter(item => {
+        return this.state.filters.filter(item => {
                 return item.key === key;
-            })
+            }) 
+            
     };
 
     //This adds a new favorite filter
@@ -192,12 +175,13 @@ class Filter extends Component {
                     ...queries[a.key],
                     a.title
                 ]
-                console.log(queries)
             } else {
                 queries[a.key] = [a.title]
             }
         }
-        this.props.filterFeedback(queries);
+        this
+            .props
+            .filterFeedback(queries);
 
     }
 
@@ -208,28 +192,37 @@ class Filter extends Component {
                 <div className="dd-container">
                     {/*Dropdown-wrapper*/}
                     <h2>Filter</h2>
-                    <Dropdown
-                        titleHelper='HFB'
-                        title='HFB'
-                        list={this.dropdownList('hfbName')}
-                        toggleItem={this.toggleSelected}
-                    /> 
+                    {this.state.filters.length > 0 && <F>
+                        <Dropdown
+                            titleHelper='HFB'
+                            title='HFB'
+                            list={this.dropdownList('hfbName')}
+                            toggleItem={this.toggleSelected}/>
+
+                        <Dropdown
+                            titleHelper="Item Number"
+                            title='Item Number'
+                            list={this.dropdownList('itemNumber')}
+                            toggleItem={this.toggleSelected}/ >
                         
-                        {this.state.filters.length > 5 
-                    && <Dropdown
-                        titleHelper="Item Number"
-                        title='Item Number'
-                        list={this.dropdownList('itemNumber')}
-                        toggleItem={this.toggleSelected}/
-                    >}
+                        <Dropdown
+                            titleHelper="Item Name"
+                            title='Item Name'
+                            list={this.dropdownList('itemName')}
+                            toggleItem={this.toggleSelected}/ >
 
-                    <Dropdown
-                        titleHelper='Saved filter'
-                        title='Saved filters'
-                        list={this.state.favoriteFilters}
-                        toggleItem={this.setFavoritesAsSelected}
-                    />
+                        <Dropdown
+                            titleHelper="Supplier Number"
+                            title='Supplier Number'
+                            list={this.dropdownList('supplierNumber')}
+                            toggleItem={this.toggleSelected}/ >
 
+                        <Dropdown
+                            titleHelper='Saved filter'
+                            title='Saved filters'
+                            list={this.state.favoriteFilters}
+                            toggleItem={this.setFavoritesAsSelected}/>
+                    </F>}
                 </div>
                 <div className='af-container'>
                     {/*Active filters-wrapper*/}

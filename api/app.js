@@ -25,9 +25,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// Body Parser
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
 
 //Routes
 const createUserRoute = require('./routes/createUser');
@@ -53,6 +50,9 @@ app.use('/api/get-feedback', getFeedbackRoute);
 
 const getFilteredFeedbackRoute = require('./routes/getFilteredFeedback');
 app.use('/api/filter-feedback', getFilteredFeedbackRoute);
+
+const getFiltersRoute = require('./routes/getFilters');
+app.use('/api/get-filters', getFiltersRoute);
 
 // Export
 module.exports = app;

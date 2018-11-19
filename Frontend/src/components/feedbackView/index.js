@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Filter from '../filter';
 import './feedbackView.css';
 import FeedbackPreviewList from '../feedbackPreviewList';
 import DetailedFeedback from '../detailedFeedback';
 
-
 class FeedbackView extends Component {
     state = {
         filterIsDirty: false,
-        filteredFeedback: [],
+        filteredFeedback: []
     }
 
     componentDidMount() {
-            fetch('http://localhost:3001/api/get-feedback')
+        fetch('http://localhost:3001/api/get-feedback')
             .then(response => response.json())
             .then(feedback => {
                 this.setState({
@@ -39,31 +38,33 @@ class FeedbackView extends Component {
     }
 
     handleSelectedFeedback = (id) => {
-        let selectedFeedback = this.state.feedback.find(f => f._id === id);
+        let selectedFeedback = this
+            .state
+            .feedback
+            .find(f => f._id === id);
         this.setState({selectedFeedback: selectedFeedback})
     }
 
     render() {
-        return(
-            
+        return (
+
             <div className='mainGrid'>
-              <Filter 
-                filterFeedback={this.handleFilteredFeedback}
-              />
-              {this.state.feedback &&
-              <FeedbackPreviewList 
-                active={this.state.filterIsDirty}
-                filtered={this.state.filteredFeedback}
-                feedback={this.state.feedback}
-                returnId={this.handleSelectedFeedback}
-                selectedId={this.state.selectedFeedback ? this.state.selectedFeedback._id : null}
-              />
-            }
-              {this.state.selectedFeedback &&
-              <DetailedFeedback feedback={this.state.selectedFeedback} />
-            }
+                <div className='listContainers'>
+                    <Filter filterFeedback={this.handleFilteredFeedback}/> 
+                    {this.state.feedback && 
+                    <FeedbackPreviewList
+                        active={this.state.filterIsDirty}
+                        filtered={this.state.filteredFeedback}
+                        feedback={this.state.feedback}
+                        returnId={this.handleSelectedFeedback}
+                        selectedId={this.state.selectedFeedback
+                        ? this.state.selectedFeedback._id
+                        : null}/>
+}
+                </div>
+                {this.state.selectedFeedback && <DetailedFeedback feedback={this.state.selectedFeedback}/>
+}
             </div>
-            
 
         )
     }
