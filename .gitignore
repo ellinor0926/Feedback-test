@@ -5,6 +5,7 @@
 node_modules/
 /api/node_modules
 /Frontend/node_modules
+/FeedbackApp/node_modules
 
 .idea/
 
