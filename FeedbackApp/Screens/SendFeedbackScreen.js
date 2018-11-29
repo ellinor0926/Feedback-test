@@ -21,8 +21,9 @@ class SendFeedback extends React.Component {
         console.log(this.state)
     }
 
-    handleAttachPress = () => {
-        console.log('hej')
+    handleOpenCamera = () => {
+        console.log('This should navigate to camera screen');
+        this.props.navigation.navigate('Camera')
     }
 
 
@@ -31,7 +32,8 @@ class SendFeedback extends React.Component {
       return (
         <ScrollView>
             
-            <Modal />
+            <Modal openCamera={this.handleOpenCamera} />
+
             <View style={styles.container}>
                 {/* Form group 1 */}
                 <View style={styles.formGroup}>

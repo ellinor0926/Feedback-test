@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Button } from "react-native";
 import Modal from "react-native-modal";
 import AttachButton from "./AttachButton";
 
@@ -11,9 +11,16 @@ export default class ModalTester extends Component {
   _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
+    openCamera = () => {
+      this.props.openCamera();
+      this.setState({isModalVisible: false})
+    }
+
   render() {
+
+
     return (
-      <View style={{ flex: 1 }}>
+      <View>
 
         <AttachButton onAttachPress={this._toggleModal}>
           <Text>Show Modal</Text>
@@ -23,13 +30,10 @@ export default class ModalTester extends Component {
             isVisible={this.state.isModalVisible}
             onBackdropPress={() => this.setState({ isModalVisible: false })}
             onBackButtonPress={() => this.setState({ isModalVisible: false })}
-            style={styles.modal}
             >
-          <View style={{flex: 1}}>
-            <Text>Hello!</Text>
-            <TouchableOpacity onPress={this._toggleModal}>
-              <Text>Hide me!</Text>
-            </TouchableOpacity>
+          
+          <View style={styles.modalContent}>
+            <Button title='Camera' onPress={this.openCamera} />
           </View>
         </Modal>
 
@@ -41,7 +45,9 @@ export default class ModalTester extends Component {
 const styles = {
     modal: {
         marginTop: 50,
+      },
+      modalContent: {
         backgroundColor: 'white',
- 
+        height: 100
     }
 }
