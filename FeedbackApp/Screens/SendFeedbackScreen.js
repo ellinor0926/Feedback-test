@@ -1,9 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Picker, KeyboardAvoidingView, ScrollView, Header } from 'react-native';
-import AttachButton from '../Components/AttachButton';
+import { View, Button, TextInput, Picker, Keyboard, ScrollView, Animated } from 'react-native';
 import Modal from '../Components/Modal';
 
 class SendFeedback extends React.Component {
+    constructor(props) {
+        super(props);
+    
+        this.keyboardHeight = new Animated.Value(0);
+    
+      }
     static navigationOptions = {
       title: 'Send Feedback',
     };
@@ -26,15 +31,39 @@ class SendFeedback extends React.Component {
         this.props.navigation.navigate('Camera')
     }
 
+  componentDidMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+    
+  _keyboardDidShow = (event) => {
+      Animated.parallel([
+        Animated.timing(this.keyboardHeight, {
+          duration: event.duration,
+          toValue: event.endCoordinates.height,
+        }),
+        
+      ]).start();
+    };
+    
+    _keyboardDidHide = (event) => {
+      Animated.parallel([
+        Animated.timing(this.keyboardHeight, {
+          // duration: event.duration,
+          toValue: 0,
+        }),
+        
+      ]).start();
+    };
 
     render() {
       const {navigate} = this.props.navigation;
       return (
-        <ScrollView>
-            
-            <Modal openCamera={this.handleOpenCamera} />
-
-            <View style={styles.container}>
+        <Animated.View style={[styles.container, { paddingBottom: this.keyboardHeight }]}>
+            <ScrollView>
+          
+                <Modal openCamera={this.handleOpenCamera} />
+          
                 {/* Form group 1 */}
                 <View style={styles.formGroup}>
 
@@ -73,7 +102,7 @@ class SendFeedback extends React.Component {
                             <Picker.Item label="Recurring problem" value="recurring problem" />
                     </Picker>
                 </View>
-
+                
                 {/* Form group 3 */}
                 <View style={styles.formGroup} >
         
@@ -105,9 +134,8 @@ class SendFeedback extends React.Component {
 
                 <Button onPress={this.handleSubmit} title='Send' />
 
-            </View>
-
-        </ScrollView>
+            </ScrollView>
+        </Animated.View>
       );
     }
   }
@@ -115,7 +143,7 @@ class SendFeedback extends React.Component {
   const styles = {
       container: {
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
       },
       formGroup: {
           backgroundColor: 'white',
