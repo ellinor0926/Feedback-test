@@ -4,11 +4,13 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import HomeScreen from './Screens/HomeScreen.js';
 import SendFeedbackScreen from './Screens/SendFeedbackScreen.js';
 import CameraScreen from './Screens/CameraScreen.js';
+import ScannerScreen from './Screens/ScannerScreen';
 
 const AppNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Send: {screen: SendFeedbackScreen},
-  Camera : {screen: CameraScreen}
+  Camera : {screen: CameraScreen},
+  Scanner: {screen: ScannerScreen}
 }, {initialRouteName: 'Home'});
 
 const AppContainer = createAppContainer(AppNavigator);

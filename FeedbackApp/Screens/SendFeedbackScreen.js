@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { View, Button, TextInput, Picker, Keyboard, ScrollView, Animated } from 'react-native';
 import Modal from '../Components/Modal';
+import ScanButton from '../Components/ScanButton';
+import { Dropdown } from 'react-native-material-dropdown';
 
-class SendFeedback extends React.Component {
+class SendFeedback extends Component {
     constructor(props) {
         super(props);
     
@@ -16,18 +18,44 @@ class SendFeedback extends React.Component {
     state = {
         itemNumber: null,
         supplierNumber: null,
-        typeOfInput: null,
+        typeOfInput: '',
         productionWeek: null,
         comments: null,
         attachments: [],
     }
 
     handleSubmit = () => {
-        console.log(this.state)
+        console.log('submit', this.state)
+
+       const productionWeek = Number(this.state.productionWeek);
+
+        this.setState({
+            itemNumber: null,
+            supplierNumber: null,
+            productionWeek: null,
+            typeOfInput: '',
+            comments: null,
+            attachments: [],
+        })
+
+    }
+
+    validateInputs = (value, stateKey, requiredLength) => {
+
+        this.setState({
+            [stateKey]: Number(value)
+        })
+
+        if(value.length === requiredLength) {
+            console.log('valid')
+            return 'valid'
+        } else {
+            return 'notvalid'
+        }
+
     }
 
     handleOpenCamera = () => {
-        console.log('This should navigate to camera screen');
         this.props.navigation.navigate('Camera')
     }
 
@@ -56,80 +84,82 @@ class SendFeedback extends React.Component {
       ]).start();
     };
 
+    handleDropdownSelect = (value) => {
+        this.setState({typeOfInput: value})
+    }
+
     render() {
       const {navigate} = this.props.navigation;
       return (
         <Animated.View style={[styles.container, { paddingBottom: this.keyboardHeight }]}>
             <ScrollView>
-          
-                <Modal openCamera={this.handleOpenCamera} />
-          
-                {/* Form group 1 */}
-                <View style={styles.formGroup}>
+                <View style={styles.header}>
+                    <Modal openCamera={this.handleOpenCamera} />
+                    <ScanButton onScanPress={() => navigate('Scanner')} />
+                </View>
 
+                <View style={styles.formGroup}>
+                    
                     {/* Item number input */}
-                    <View style={styles.form} >
-                        <TextInput
-                            keyboardType='phone-pad'
-                            style={styles.input}
-                            placeholder="Item number"
-                            onChangeText={(text) => this.setState({itemNumber: text})}
-                            value={this.state.itemNumber}
-                        />
-                    </View>
+                    <TextInput
+                        keyboardType={'phone-pad'}
+                        style={styles.input}
+                        placeholderTextColor='rgba(0, 0, 0, .38)'
+                        placeholder="Item number"
+                        onChangeText={(text) => this.setState({itemNumber: text})}
+                        value={this.state.itemNumber}
+                        maxLength={8}
+                    />
+                    
 
                     {/* Supplier number input */}
-                    <View style={styles.form} >
-                        <TextInput
-                            keyboardType='phone-pad'
-                            style={styles.input}
-                            placeholder="Supplier number"
-                            onChangeText={(text) => this.setState({supplierNumber: text})}
-                            value={this.state.supplierNumber}
-                        />
-                    </View>
-                
-                {/* End form group 1 */}
-                </View>
-
-                {/* Form group 2 */}
-                <View style={styles.formGroup} >
-                    <Picker
-                        selectedValue={this.state.typeOfInput}
+                    <View style={styles.form} />
+                    <TextInput
+                        keyboardType='phone-pad'
                         style={styles.input}
-                        onValueChange={(itemValue, itemIndex) => this.setState({typeOfInput: itemValue})}>
-                            <Picker.Item label="Idea" value="idea" />
-                            <Picker.Item label="Recurring problem" value="recurring problem" />
-                    </Picker>
-                </View>
-                
-                {/* Form group 3 */}
-                <View style={styles.formGroup} >
-        
-                    {/* Production week input */}
-                    <View style={styles.form} >
-                        <TextInput
-                            keyboardType='phone-pad'
-                            style={styles.input}
-                            placeholder="Production week (YYWW)"
-                            onChangeText={(text) => this.setState({productionWeek: text})}
-                            value={this.state.productionWeek}
+                        placeholderTextColor='rgba(0, 0, 0, .38)'
+                        placeholder="Supplier number"
+                        onChangeText={(text) => this.setState({supplierNumber: text})}
+                        value={this.state.supplierNumber}
+                        maxLength={5}
+                    />
+                    
+                    <View style={styles.form} />
+
+                    {/* Type of Input */}
+                    <View style={styles.dropdown} >
+                        <Dropdown 
+                            label='Type of feedback' 
+                            data={[{value: 'Idea'}, {value: 'Recurring problem'}, {value: 'Internal damage'}, {value: 'Other'}]} 
+                            onChangeText={this.handleDropdownSelect}
+                            value={this.state.typeOfInput}
                         />
                     </View>
+                
+                    {/* Production week input */}
+                    <TextInput
+                        keyboardType='phone-pad'
+                        style={styles.input}
+                        placeholderTextColor='rgba(0, 0, 0, .38)'
+                        placeholder="Production week (YYWW)"
+                        onChangeText={(text) => this.setState({productionWeek: text})}
+                        value={this.state.productionWeek}
+                        maxLength={4}
+                    />
+                    
+                    <View style={styles.form} />
 
                     {/* Comments input */}
-                    <View style={styles.form} >
-                        <TextInput
-                            multiline={true}
-                            numberOfLines={5}
-                            style={styles.textArea}
-                            placeholder="Comments"
-                            onChangeText={(text) => this.setState({comments: text})}
-                            value={this.state.comments}
-                        />
-                    </View>
+                    <TextInput
+                        placeholder="Comments"
+                        multiline={true}
+                        placeholderTextColor='rgba(0, 0, 0, .38)'
+                        style={styles.input}
+                        onChangeText={(text) => this.setState({comments: text})}
+                        value={this.state.comments}
+                        autoCapitalize='sentences'
+                    />
 
-                {/* End form group 3 */}
                 </View>
 
                 <Button onPress={this.handleSubmit} title='Send' />
@@ -145,24 +175,39 @@ class SendFeedback extends React.Component {
           justifyContent: 'center',
           alignItems: 'center',
       },
+      header: {
+          flexDirection: 'row',
+          padding: 8,
+          justifyContent: 'space-around'
+      },
       formGroup: {
           backgroundColor: 'white',
-          elevation: 4,
+          elevation: 2,
           margin: 8
       },
       form: {
-        borderTopStyle: 'solid',
-        borderTopWidth: 1,
-        borderTopColor: 'lightgrey',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 0.2,
+        borderBottomColor: 'grey',
+        width: '95%',
+        alignSelf: 'center',
       },
       input: {
-          height: 50,
+          height: 60,
           padding: 8,
-          width: 340
+          width: 340,
+        
       },
       textArea: {
         padding: 8,
-        width: 340
+        width: 340,
+      },
+      dropdown: {
+        width: '95%',
+        alignSelf: 'center'
+      },
+      placeholder: {
+          color: 'black'
       }
   }
 
