@@ -18,24 +18,24 @@ export default class Scanner extends Component {
     });
   };
 
-  _handleBarCodeRead = data => {
-    Alert.alert(
-      'Scan successful!',
-      JSON.stringify(data)
-    );
+  _onBarCodeRead = code => {
+    const itemNumber = code.data.substring(0, 8);
+    const supplierNumber = code.data.substring(8, 13)
+
+    this.props.onBarCodeRead(itemNumber, supplierNumber)
   };
 
   render() {
       return (
         <View style={styles.container}>
             <BarCodeScanner
-                onBarCodeScanned={this._handleBarCodeRead}
+                onBarCodeScanned={this._onBarCodeRead}
                 style={[StyleSheet.absoluteFill, styles.scanner]}
             >
-                <Image 
+                {/* <Image 
                     source={require('../assets/frame.png')}
                     style={styles.frameImage} 
-                />
+                /> */}
 
             </BarCodeScanner>
       </View>

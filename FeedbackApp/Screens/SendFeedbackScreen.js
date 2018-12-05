@@ -1,19 +1,53 @@
 import React, {Component} from 'react';
-import { View, Button, TextInput, Picker, Keyboard, ScrollView, Animated } from 'react-native';
+import { View, Button, TextInput, Keyboard, ScrollView, Animated } from 'react-native';
+import { withNavigationFocus } from 'react-navigation-is-focused-hoc';
 import Modal from '../Components/Modal';
 import ScanButton from '../Components/ScanButton';
 import { Dropdown } from 'react-native-material-dropdown';
 
 class SendFeedback extends Component {
+    static navigationOptions = {
+      title: 'Send Feedback',
+    };
+    
     constructor(props) {
         super(props);
     
         this.keyboardHeight = new Animated.Value(0);
     
+    }
+    componentDidMount () {
+      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+      this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.isFocused && nextProps.isFocused) {
+          // screen enter (refresh data, update ui ...)
+          this.setState({
+              itemNumber: this.props.navigation.getParam('itemNumber'),
+              supplierNumber: this.props.navigation.getParam('supplierNumber')
+          })
+        }
+        if (this.props.isFocused && !nextProps.isFocused) {
+          // screen exit
+        }
       }
-    static navigationOptions = {
-      title: 'Send Feedback',
-    };
+     
+      shouldComponentUpdate(nextProps) {
+        // Update only once after the screen disappears
+        if (this.props.isFocused && !nextProps.isFocused) {
+          return true
+        }
+     
+        // Don't update if the screen is not focused
+        if (!this.props.isFocused && !nextProps.isFocused) {
+          return false
+        }
+     
+        // Update the screen if its re-enter
+        return !this.props.isFocused && nextProps.isFocused
+      }
 
     state = {
         itemNumber: null,
@@ -23,6 +57,8 @@ class SendFeedback extends Component {
         comments: null,
         attachments: [],
     }
+
+
 
     handleSubmit = () => {
         console.log('submit', this.state)
@@ -59,10 +95,6 @@ class SendFeedback extends Component {
         this.props.navigation.navigate('Camera')
     }
 
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-  }
     
   _keyboardDidShow = (event) => {
       Animated.parallel([
@@ -88,10 +120,19 @@ class SendFeedback extends Component {
         this.setState({typeOfInput: value})
     }
 
+    
     render() {
-      const {navigate} = this.props.navigation;
+        const {navigate} = this.props.navigation;
+        const { params } = this.props.navigation.state;
+        const {navigation} = this.props;
+        
+        console.log('in render ', navigation.getParam('itemNumber'))
+        // console.log(this.props.navigation.getParam('itemNumber', null))
+        console.log(this.state)
+
       return (
         <Animated.View style={[styles.container, { paddingBottom: this.keyboardHeight }]}>
+
             <ScrollView>
                 <View style={styles.header}>
                     <Modal openCamera={this.handleOpenCamera} />
@@ -106,7 +147,7 @@ class SendFeedback extends Component {
                         style={styles.input}
                         placeholderTextColor='rgba(0, 0, 0, .38)'
                         placeholder="Item number"
-                        onChangeText={(text) => this.setState({itemNumber: text})}
+                        onChangeText={(text) => this.setState({text})}
                         value={this.state.itemNumber}
                         maxLength={8}
                     />
@@ -211,4 +252,4 @@ class SendFeedback extends Component {
       }
   }
 
-  export default SendFeedback;
+  export default withNavigationFocus(SendFeedback);

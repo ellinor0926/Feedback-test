@@ -1,14 +1,32 @@
 import React from 'react';
-import { View, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Button } from 'react-native';
 import Scanner from '../Components/Scanner';
 
 export default class ScannerScreen extends React.Component {
 
+    state = {
+        itemNumber: null,
+        supplierNumber: null
+    }
+
+    handleBarCodeRead = (itemNumber, supplierNumber) => {
+        this.setState({
+            itemNumber, supplierNumber
+        })
+    }
+
+    ok = () => {
+        this.props.navigation.navigate('Send', {itemNumber: this.state.itemNumber, supplierNumber: this.state.supplierNumber})
+    }
+
   render() {
+    const { ok } = this.props;
 
     return (
     <View  style={{ flex: 1 }} >
-        <Scanner />
+
+        <Scanner onBarCodeRead={this.handleBarCodeRead} />
+
         <KeyboardAvoidingView style={{ flex: 1,backgroundColor: 'white' }}>
             {/* Form group 1 */}
                 <View style={styles.formGroup}>
@@ -19,6 +37,7 @@ export default class ScannerScreen extends React.Component {
                             keyboardType='phone-pad'
                             style={styles.input}
                             placeholder="Item number"
+                            value={this.state.itemNumber}
                             
                         />
                     </View>
@@ -29,13 +48,16 @@ export default class ScannerScreen extends React.Component {
                             keyboardType='phone-pad'
                             style={styles.input}
                             placeholder="Supplier number"
-                            
+                            value={this.state.supplierNumber}
                         />
                     </View>
                 
                 {/* End form group 1 */}
                 </View>
         </KeyboardAvoidingView>
+
+        <Button title='OK' onPress={this.ok} />
+        
     </View>
     )
     

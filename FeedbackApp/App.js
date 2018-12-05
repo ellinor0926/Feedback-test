@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
+import { updateFocus, getCurrentRouteKey } from 'react-navigation-is-focused-hoc';
 import HomeScreen from './Screens/HomeScreen.js';
 import SendFeedbackScreen from './Screens/SendFeedbackScreen.js';
 import CameraScreen from './Screens/CameraScreen.js';
@@ -19,7 +20,11 @@ const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return <AppContainer 
+      onNavigationStateChange={(prevState, currentState) => {
+        updateFocus(currentState)
+      }}
+    />;
   }
 }
 

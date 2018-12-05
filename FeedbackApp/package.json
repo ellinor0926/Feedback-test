@@ -13,10 +13,11 @@
     "npm": "^6.4.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-modal": "^7.0.1",
     "react-native-modal-dropdown": "^0.6.2",
-    "react-native-material-dropdown": "^0.11.1",
-    "react-navigation": "^3.0.1"
+    "react-navigation": "^3.0.1",
+    "react-navigation-is-focused-hoc": "^1.1.1"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
