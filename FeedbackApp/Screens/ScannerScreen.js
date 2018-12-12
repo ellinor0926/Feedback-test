@@ -5,8 +5,8 @@ import Scanner from '../Components/Scanner';
 export default class ScannerScreen extends React.Component {
 
     state = {
-        itemNumber: null,
-        supplierNumber: null
+        itemNumber: '',
+        supplierNumber: ''
     }
 
     handleBarCodeRead = (itemNumber, supplierNumber) => {
@@ -17,10 +17,13 @@ export default class ScannerScreen extends React.Component {
 
     ok = () => {
         this.props.navigation.navigate('Send', {itemNumber: this.state.itemNumber, supplierNumber: this.state.supplierNumber})
+        this.setState({
+            itemNumber: '',
+            supplierNumber: ''
+        })
     }
 
   render() {
-    const { ok } = this.props;
 
     return (
     <View  style={{ flex: 1 }} >
@@ -28,7 +31,7 @@ export default class ScannerScreen extends React.Component {
         <Scanner onBarCodeRead={this.handleBarCodeRead} />
 
         <KeyboardAvoidingView style={{ flex: 1,backgroundColor: 'white' }}>
-            {/* Form group 1 */}
+
                 <View style={styles.formGroup}>
 
                     {/* Item number input */}
@@ -37,8 +40,8 @@ export default class ScannerScreen extends React.Component {
                             keyboardType='phone-pad'
                             style={styles.input}
                             placeholder="Item number"
+                            onChangeText={(text) => this.setState({itemNumber: text})}
                             value={this.state.itemNumber}
-                            
                         />
                     </View>
 
@@ -48,6 +51,7 @@ export default class ScannerScreen extends React.Component {
                             keyboardType='phone-pad'
                             style={styles.input}
                             placeholder="Supplier number"
+                            onChangeText={(text) => this.setState({supplierNumber: text})}
                             value={this.state.supplierNumber}
                         />
                     </View>

@@ -8,22 +8,11 @@ class Filter extends Component {
 
     state = {
         filters: [],
-        // filters: [     {         id: 0,         title: 'Bed and bath textiles',
-        //   selected: false,         key: 'hfbName'     }, {         id: 1,
-        // title: 'Storage',         selected: false,         key: 'hfbName'     }, {
-        //      id: 2,         title: 'Decorations',         selected: false,
-        // key: 'hfbName'     }, {         id: 3,         title: 'Kitchen and food',
-        //     selected: false,         key: 'hfbName'     }, {         id: 4,
-        // title: 'Workspace',         selected: false,         key: 'hfbName'     } ],
         favoriteFilters: [],
         activeFilters: []
     };
 
-    componentDidMount() {
-        // fetch('http://localhost:3001/api/get-products') .then(response =>
-        // response.json()) .then(products => {     this.itemNumberFilter(products);
-        // });
-        
+    componentDidMount() {        
         fetch('http://localhost:3001/api/get-filters')
             .then(res => res.json())
             .then(filters => {

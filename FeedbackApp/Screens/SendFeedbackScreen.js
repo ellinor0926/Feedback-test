@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { View, Button, TextInput, Keyboard, ScrollView, Animated } from 'react-native';
 import { withNavigationFocus } from 'react-navigation-is-focused-hoc';
+// import { withNavigationFocus } from 'react-navigation';
 import Modal from '../Components/Modal';
 import ScanButton from '../Components/ScanButton';
 import { Dropdown } from 'react-native-material-dropdown';
@@ -21,33 +22,41 @@ class SendFeedback extends Component {
       this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (!this.props.isFocused && nextProps.isFocused) {
-          // screen enter (refresh data, update ui ...)
-          this.setState({
-              itemNumber: this.props.navigation.getParam('itemNumber'),
-              supplierNumber: this.props.navigation.getParam('supplierNumber')
-          })
-        }
-        if (this.props.isFocused && !nextProps.isFocused) {
-          // screen exit
-        }
-      }
+    // componentWillReceiveProps(nextProps) {
+    //     if (!this.props.isFocused && nextProps.isFocused) {
+    //     //   screen enter (refresh data, update ui ...)
+    //       this.setState({
+    //           itemNumber: this.props.navigation.getParam('itemNumber', this.state.itemNumber),
+    //           supplierNumber: this.props.navigation.getParam('supplierNumber', this.state.supplierNumber)
+    //       })
+
+    //       if(this.props.navigation.state.params) {
+              
+    //         console.log(this.props.navigation)
+
+    //       }
+
+    //     }
+    //     if (this.props.isFocused && !nextProps.isFocused) {
+    //       // screen exit
+    //     }
+    //   }
      
-      shouldComponentUpdate(nextProps) {
-        // Update only once after the screen disappears
-        if (this.props.isFocused && !nextProps.isFocused) {
-          return true
-        }
+    //   shouldComponentUpdate(nextProps) {
+    //     // Update only once after the screen disappears
+    //     if (this.props.isFocused && !nextProps.isFocused) {
+    //       return true
+    //     }
      
-        // Don't update if the screen is not focused
-        if (!this.props.isFocused && !nextProps.isFocused) {
-          return false
-        }
+    //     // Don't update if the screen is not focused
+    //     if (!this.props.isFocused && !nextProps.isFocused) {
+    //       return false
+    //     }
      
-        // Update the screen if its re-enter
-        return !this.props.isFocused && nextProps.isFocused
-      }
+    //     // Update the screen if its re-enter
+    //     return !this.props.isFocused && nextProps.isFocused
+    //   }
+
 
     state = {
         itemNumber: null,
@@ -56,23 +65,38 @@ class SendFeedback extends Component {
         productionWeek: null,
         comments: null,
         attachments: [],
+        sender: '5bea8a1439777c2904ebcb02' //hard coded for now
     }
-
-
 
     handleSubmit = () => {
         console.log('submit', this.state)
 
-       const productionWeek = Number(this.state.productionWeek);
-
-        this.setState({
-            itemNumber: null,
+        fetch('http://localhost:3001/api/send-feedback', {
+            method: 'POST',
+            body: JSON.stringify({
+                comment: this.state.comments,
+                itemNumber: Number(this.state.itemNumber),
+                sender: this.state.sender,
+                supplier: Number(this.state.supplierNumber),
+                productionWeek: Number(this.state.productionWeek)
+            }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(feedback => {
+                this.setState({
+                    itemNumber: null,
             supplierNumber: null,
             productionWeek: null,
             typeOfInput: '',
             comments: null,
             attachments: [],
-        })
+                })
+            })
+            .catch(error => console.log('Oops, an error occured: ', error))
+
 
     }
 
@@ -95,8 +119,7 @@ class SendFeedback extends Component {
         this.props.navigation.navigate('Camera')
     }
 
-    
-  _keyboardDidShow = (event) => {
+    _keyboardDidShow = (event) => {
       Animated.parallel([
         Animated.timing(this.keyboardHeight, {
           duration: event.duration,
@@ -109,7 +132,7 @@ class SendFeedback extends Component {
     _keyboardDidHide = (event) => {
       Animated.parallel([
         Animated.timing(this.keyboardHeight, {
-          // duration: event.duration,
+        //   duration: event.duration,
           toValue: 0,
         }),
         
@@ -120,16 +143,11 @@ class SendFeedback extends Component {
         this.setState({typeOfInput: value})
     }
 
-    
+
     render() {
         const {navigate} = this.props.navigation;
-        const { params } = this.props.navigation.state;
-        const {navigation} = this.props;
         
-        console.log('in render ', navigation.getParam('itemNumber'))
-        // console.log(this.props.navigation.getParam('itemNumber', null))
-        console.log(this.state)
-
+        
       return (
         <Animated.View style={[styles.container, { paddingBottom: this.keyboardHeight }]}>
 
@@ -147,7 +165,7 @@ class SendFeedback extends Component {
                         style={styles.input}
                         placeholderTextColor='rgba(0, 0, 0, .38)'
                         placeholder="Item number"
-                        onChangeText={(text) => this.setState({text})}
+                        onChangeText={(text) => this.setState({itemNumber: text})}
                         value={this.state.itemNumber}
                         maxLength={8}
                     />

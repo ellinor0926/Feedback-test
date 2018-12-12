@@ -50,7 +50,10 @@ class FeedbackView extends Component {
 
             <div className='mainGrid'>
                 <div className='listContainers'>
-                    <Filter filterFeedback={this.handleFilteredFeedback}/> {this.state.feedback && <FeedbackPreviewList
+                    <Filter filterFeedback={this.handleFilteredFeedback}/> 
+                    
+                    {this.state.feedback && 
+                    <FeedbackPreviewList
                         active={this.state.filterIsDirty}
                         filtered={this.state.filteredFeedback}
                         feedback={this.state.feedback}
